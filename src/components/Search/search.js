@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { GEO_API_URL, geoApiOptions } from "../../api";
 
 const Search = ({onSearchChange}) => {
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState({value: '6.866666666 80.016666666', label: 'Colombo District, LK'});
 
   const loadOptions = (inputValue) => {
     return fetch(
@@ -28,6 +28,10 @@ const Search = ({onSearchChange}) => {
     setSearch(searchData);
     onSearchChange(searchData);
   };
+
+  useEffect(() => {
+    onSearchChange(search);
+  }, [search, onSearchChange]);
 
   return (
     <AsyncPaginate

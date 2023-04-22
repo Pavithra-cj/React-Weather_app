@@ -1,59 +1,28 @@
-import React, {useState} from "react";
-import './App.css';
-import { Login } from './Main/Login';
-import { Register } from './Main/Register';
-import Search from "./components/Search/search.js";
-import CurrentWeather from "./components/current-weather/current-weather";
-import Forecast from "./components/Forecast/forecast";
-import {WEATHER_API_URL, WEATHER_API_KEY} from './api.js';
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Authenticator } from "./Main/Authenticator";
+import { Home } from "./Main/Home";
 
 function App() {
-
-  /*const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }*/
-
-  const [currentWeather, setCurrentWeather] = useState(null);
-  const [forecast, setForecast] = useState(null);
-
-  const handleOnSearchChange = (searchData) => {
-    const [lat, lon] = searchData.value.split(" ");
-
-    const currentWeatherFetch = fetch(
-      `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
-    );
-    const forecastFetch = fetch(
-      `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
-    );
-
-    Promise.all([currentWeatherFetch, forecastFetch])
-      .then(async (response) => {
-        const weatherResponse = await response[0].json();
-        const forecastResponse = await response[1].json();
-
-        setCurrentWeather({ city: searchData.label , ...weatherResponse});
-        setForecast({ city: searchData.label , ...forecastResponse});
-
-      })
-      .catch(console.log);
-
-  }
-
   return (
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Authenticator/>} />
+        <Route exact path="/home" element={<Home/>} />
+      </Routes>
+    </Router>
     /*<div className="App">
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm}/>
       }
-    </div>*/
+    </div>
 
     <div className="container">
         <Search onSearchChange={handleOnSearchChange} />
         {currentWeather && <CurrentWeather data={currentWeather} />}
         {forecast && <Forecast data={forecast} />}
-    </div>
-
+    </div>*/
   );
 }
 

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import "./Login.css";
 export const Register = (props) => {
 
     const [email, setEmail] = useState('');
@@ -11,17 +12,18 @@ export const Register = (props) => {
     }
 
     return(
-        <>
-            <form onSubmit={handleSubmit}>
-                <lable htmlfor="name">Full Name</lable>
+        <div className="container">
+            <h2>Register</h2>
+            <form className="registerForm" onSubmit={handleSubmit}>
+                <label htmlfor="name">Full Name</label>
                 <input value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" placeholder="John Snow"/>
-                <lable htmlfor="email">Email</lable>
+                <label htmlfor="email">Email</label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" id="email" name="email" placeholder="abc@email.com"/>
-                <lable htmlfor="password">Password</lable>
+                <label htmlfor="password">Password</label>
                 <input value={pass} onChange={(e) => setPassword(e.target.value)} type="password" id="pw" name="pw" placeholder="**********"/>
                 <button type="submit">Register</button>
             </form>
-            <button onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
-        </>
+            <button className="linkBtn" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
+        </div>
     );
 }
